@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AdAPI.Models
+namespace TrendsMobileAPI.Models
 {
   public class Ad
   { [Key]
