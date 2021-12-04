@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using TrendsMobileAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace TrendsMobileAPI
 {
@@ -24,7 +25,12 @@ namespace TrendsMobileAPI
         }
         public void ConfigureServices(IServiceCollection services)
         {
-          services.AddDbContext<DataContext> (opt => opt.UseNpgsql(Configuration.GetConnectionString("PostgreSqlConnection")));
+          var builder = new NpgsqlConnectionStringBuilder();
+          builder.ConnectionString = Configuration.GetConnectionString("PostgreSqlConnection");
+          builder.Username = Configuration["UserID"];
+          builder.Password = Configuration["Password"];
+
+          services.AddDbContext<DataContext> (opt => opt.UseNpgsql(builder.ConnectionString));
 
           services.AddControllers();
 
