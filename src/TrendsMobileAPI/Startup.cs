@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using TrendsMobileAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using AutoMapper;
 
 namespace TrendsMobileAPI
 {
@@ -33,6 +34,8 @@ namespace TrendsMobileAPI
           services.AddDbContext<DataContext> (opt => opt.UseNpgsql(builder.ConnectionString));
 
           services.AddControllers();
+
+          services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
           services.AddScoped<ITrendsMobileAPIRepo, TrendsMobileAPIRepo>();
         }
