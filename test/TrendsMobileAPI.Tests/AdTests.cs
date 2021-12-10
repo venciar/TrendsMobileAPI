@@ -40,7 +40,7 @@ namespace TrendsMobileAPI.Tests
       // Act
       testAd.Model = "Another Model";
       // Assert
-      Assert.Equal("Another Model#", testAd.Model);
+      Assert.Equal("Another Model", testAd.Model);
     }
   }
 }
