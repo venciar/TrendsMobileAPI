@@ -1,19 +1,24 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using TrendsMobileAPI.Models;
 
 namespace TrendsMobileAPI.Data {
-  public class TrendsMobileAPIRepo : ITrendsMobileAPIRepo
+  public class AdRepo : IAdRepo
   {
     private readonly DataContext _context;
 
-    public TrendsMobileAPIRepo(DataContext context) 
+    public AdRepo(DataContext context) 
     {
       _context = context;
     }
     public void CreateAd(Ad ad)
     {
-      throw new System.NotImplementedException();
+      if(ad == null)
+      {
+        throw new ArgumentNullException(nameof(ad));
+      }
+      _context.AdItems.Add(ad);
     }
 
     public void DeleteAd(Ad ad)
@@ -33,7 +38,7 @@ namespace TrendsMobileAPI.Data {
 
     public bool SaveChanges()
     {
-      throw new System.NotImplementedException();
+      return (_context.SaveChanges() >= 0);
     }
 
     public void UpdateAd(Ad ad)

@@ -9,6 +9,7 @@ namespace TrendsMobileAPI.Prfiles
     public AdProfile() 
     {
       CreateMap<Ad, AdReadDto>();
+      CreateMap<AdCreateDto, Ad>();
     }
   }
 }

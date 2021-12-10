@@ -3,7 +3,7 @@ using TrendsMobileAPI.Models;
 
 namespace TrendsMobileAPI.Data
 {
-  public interface ITrendsMobileAPIRepo {
+  public interface IAdRepo {
     bool SaveChanges();
     IEnumerable<Ad> GetAllAds();
     Ad GetAdById(int id);

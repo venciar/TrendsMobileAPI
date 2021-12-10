@@ -11,10 +11,10 @@ namespace TrendsMobileAPI.Controllers
   [ApiController]
   public class AdsController : ControllerBase
   {
-    private readonly ITrendsMobileAPIRepo _repository;
+    private readonly IAdRepo _repository;
     private readonly IMapper _mapper;
 
-    public AdsController(ITrendsMobileAPIRepo repository, IMapper mapper)
+    public AdsController(IAdRepo repository, IMapper mapper)
     {
       _repository = repository;
       _mapper = mapper;
@@ -28,7 +28,7 @@ namespace TrendsMobileAPI.Controllers
       return Ok(_mapper.Map<IEnumerable<AdReadDto>>(adItems));
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name="GetAdById")]
     public ActionResult<Ad> GetAdById(int id)
     {
       var adItem = _repository.GetAdById(id);
@@ -37,6 +37,18 @@ namespace TrendsMobileAPI.Controllers
         return NotFound();
       }
       return Ok(_mapper.Map<AdReadDto>(adItem));
+    }
+
+    [HttpPost]
+    public ActionResult<AdReadDto> CreateAd(AdCreateDto adCreateDto)
+    {
+      var adModel = _mapper.Map<Ad>(adCreateDto);
+
+      _repository.CreateAd(adModel);
+      _repository.SaveChanges();
+
+      var adReadDto = _mapper.Map<AdReadDto>(adModel);
+      return CreatedAtRoute(nameof(GetAdById), new { Id = adReadDto.Id }, adReadDto);
     }
   }
 }
